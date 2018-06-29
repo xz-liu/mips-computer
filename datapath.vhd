@@ -14,7 +14,7 @@
 
 -- PROGRAM		"Quartus Prime"
 -- VERSION		"Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition"
--- CREATED		"Fri Jun 29 19:55:59 2018"
+-- CREATED		"Fri Jun 29 22:26:31 2018"
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.all; 
@@ -38,7 +38,7 @@ ENTITY datapath IS
 		AluSrcB :  IN  STD_LOGIC_VECTOR(1 DOWNTO 0);
 		PCSrc :  IN  STD_LOGIC_VECTOR(1 DOWNTO 0);
 		ReadData :  IN  STD_LOGIC_VECTOR(31 DOWNTO 0);
-		Adr :  OUT  STD_LOGIC_VECTOR(5 DOWNTO 0);
+		Adr :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
 		Funct :  OUT  STD_LOGIC_VECTOR(5 DOWNTO 0);
 		Op :  OUT  STD_LOGIC_VECTOR(5 DOWNTO 0);
 		pc :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -344,7 +344,7 @@ GENERIC MAP(int => 0,
 			)
 PORT MAP(		 y => SYNTHESIZED_WIRE_12);
 
-Adr(5 DOWNTO 0) <= PCAdr(7 DOWNTO 2);
+Adr <= PCAdr;
 Funct(5 DOWNTO 0) <= Instr(5 DOWNTO 0);
 Op(5 DOWNTO 0) <= Instr(31 DOWNTO 26);
 pc <= pc_ALTERA_SYNTHESIZED;

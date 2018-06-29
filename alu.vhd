@@ -22,6 +22,7 @@ begin
 				  a - b when "110",
         		  a and b when "000",
         		  a or b when "001",
+				  a xor b when "011",
         		  a-b when "111" ,
 				  a when others;
 	zero<= '1' when result =x"00000000"	 else '0';

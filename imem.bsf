@@ -40,8 +40,8 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 0 64)
 		(input)
-		(text "a[5..0]" (rect 0 0 24 12)(font "Arial" ))
-		(text "a[5..0]" (rect 21 59 45 71)(font "Arial" ))
+		(text "a[31..0]" (rect 0 0 28 12)(font "Arial" ))
+		(text "a[31..0]" (rect 21 59 49 71)(font "Arial" ))
 		(line (pt 0 64)(pt 16 64)(line_width 3))
 	)
 	(port

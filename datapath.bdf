@@ -311,7 +311,7 @@ refer to the applicable agreement for further details.
 	(output)
 	(rect 1248 -176 1424 -160)
 	(text "OUTPUT" (rect 1 0 51 13)(font "Arial" (font_size 6)))
-	(text "Adr[5..0]" (rect 90 0 145 19)(font "Intel Clear" ))
+	(text "Adr[31..0]" (rect 90 0 153 19)(font "Intel Clear" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
@@ -373,7 +373,7 @@ refer to the applicable agreement for further details.
 	(annotation_block (parameter)(rect 392 -240 592 -200))
 )
 (symbol
-	(rect 640 -200 840 -88)
+	(rect 728 -200 928 -88)
 	(text "mux2" (rect 5 0 40 15)(font "Arial" ))
 	(text "inst11" (rect 8 96 48 115)(font "Intel Clear" ))
 	(port
@@ -412,7 +412,7 @@ refer to the applicable agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 184 96))
 	)
-	(annotation_block (parameter)(rect 640 -240 840 -200))
+	(annotation_block (parameter)(rect 728 -240 928 -200))
 )
 (symbol
 	(rect 248 224 440 336)
@@ -1550,20 +1550,14 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "IorD" (rect 608 -152 633 -133)(font "Intel Clear" ))
-	(pt 640 -136)
-	(pt 600 -136)
+	(text "IorD" (rect 696 -152 721 -133)(font "Intel Clear" ))
+	(pt 728 -136)
+	(pt 688 -136)
 )
 (connector
 	(text "WD[31..0]" (rect 1142 152 1205 171)(font "Intel Clear" ))
 	(pt 1136 176)
 	(pt 1216 176)
-	(bus)
-)
-(connector
-	(text "PCAdr[7..2]" (rect 1158 -192 1231 -173)(font "Intel Clear" ))
-	(pt 1248 -168)
-	(pt 1160 -168)
 	(bus)
 )
 (connector
@@ -1703,18 +1697,6 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "pc[31..0]" (rect 620 -192 676 -173)(font "Intel Clear" ))
-	(pt 592 -168)
-	(pt 640 -168)
-	(bus)
-)
-(connector
-	(text "ALUOut[31..0]" (rect 592 -168 682 -149)(font "Intel Clear" ))
-	(pt 640 -152)
-	(pt 600 -152)
-	(bus)
-)
-(connector
 	(text "ALUOut[31..0]" (rect 1050 448 1140 467)(font "Intel Clear" ))
 	(pt 1120 464)
 	(pt 1040 464)
@@ -1724,12 +1706,6 @@ refer to the applicable agreement for further details.
 	(text "pc[31..28]" (rect 787 608 851 627)(font "Intel Clear" ))
 	(pt 864 608)
 	(pt 800 608)
-	(bus)
-)
-(connector
-	(text "PCAdr[31..0]" (rect 850 -192 931 -173)(font "Intel Clear" ))
-	(pt 840 -168)
-	(pt 896 -168)
 	(bus)
 )
 (connector
@@ -1775,6 +1751,24 @@ refer to the applicable agreement for further details.
 (connector
 	(pt 192 304)
 	(pt 192 424)
+	(bus)
+)
+(connector
+	(text "ALUOut[31..0]" (rect 648 -168 738 -149)(font "Intel Clear" ))
+	(pt 680 -152)
+	(pt 728 -152)
+	(bus)
+)
+(connector
+	(text "pc[31..0]" (rect 676 -192 732 -173)(font "Intel Clear" ))
+	(pt 592 -168)
+	(pt 728 -168)
+	(bus)
+)
+(connector
+	(text "PCAdr[31..0]" (rect 1158 -192 1239 -173)(font "Intel Clear" ))
+	(pt 928 -168)
+	(pt 1248 -168)
 	(bus)
 )
 (junction (pt 232 256))

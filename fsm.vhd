@@ -40,6 +40,79 @@ begin
 		if(reset='1') then
 			stateNow:=S_FECTH;
 		elsif rising_edge(clk) then
+		
+			case stateNow is
+				when S_FECTH		=>
+						IorD<='0';
+						AluSrcA<='0';
+						ALUSrcB<="01";
+						ALUOp<="00";
+						PCSrc<="00";
+						
+						IRWrite<='1';
+						PCWrite<='1';
+						MemWrite<='0';
+						RegWrite<='0';
+						Branch<='0';
+				when S_DECODE		=>
+						AluSrcA<='0';
+						ALUSrcB<="11";
+						ALUOp<="00";
+						
+						IRWrite<='0';
+						PCWrite<='0';
+						MemWrite<='0';
+						RegWrite<='0';
+						Branch<='0';
+				when S_MEMADR		=>
+						AluSrcA<='1';
+						ALUSrcB<="10";
+						ALUOp<="00";
+				when S_MEMREAD		=>
+						IorD<='1';
+				when S_MEMWRITEBACK	=>
+						RegDst<='0';
+						MemtoReg<='1';
+						
+						RegWrite<='1';
+				when S_MEMWRITE		=>
+						IorD<='1';
+						
+						MemWrite<='1';
+				when S_EXECUTE		=>
+						AluSrcA<='1';
+						ALUSrcB<="00";
+						ALUOp<="10";
+				when S_ALUWRITEBACK	=>
+						RegDst<='1';
+						MemtoReg<='0';
+						
+						RegWrite<='1';
+				when S_BRANCH		=>
+						AluSrcA<='1';
+						ALUSrcB<="00";
+						ALUOp<="01";
+						PCSrc<="01";
+						
+						Branch<='1';
+				when S_ADDIEXEC		=>
+						AluSrcA<='1';
+						ALUSrcB<="10";
+						ALUOp<="00";
+						
+				when S_ADDIWRITEBACK=>
+						RegDst<='0';
+						MemtoReg<='0';
+						
+						RegWrite<='1';
+				when S_JUMP			=>
+						PCSrc<="10";
+						
+						PCWrite<='1';
+				when others 		=>
+					null;
+			end case;
+			
 			case stateNow is
 				when S_FECTH		=>
 					stateNow:=S_DECODE;
@@ -91,76 +164,5 @@ begin
 --		MemWrite,PCWrite:out std_logic;
 --		Branch,RegWrite	:out std_logic;
 --		ALUOp			:out std_logic_vector(1 downto 0)
-		case stateNow is
-			when S_FECTH		=>
-					IorD<='0';
-					AluSrcA<='0';
-					ALUSrcB<="01";
-					ALUOp<="00";
-					PCSrc<="00";
-					
-					IRWrite<='1';
-					PCWrite<='1';
-					MemWrite<='0';
-					RegWrite<='0';
-					Branch<='0';
-			when S_DECODE		=>
-					AluSrcA<='0';
-					ALUSrcB<="11";
-					ALUOp<="00";
-					
-					IRWrite<='0';
-					PCWrite<='0';
-					MemWrite<='0';
-					RegWrite<='0';
-					Branch<='0';
-			when S_MEMADR		=>
-					AluSrcA<='1';
-					ALUSrcB<="10";
-					ALUOp<="00";
-			when S_MEMREAD		=>
-					IorD<='1';
-			when S_MEMWRITEBACK	=>
-					RegDst<='0';
-					MemtoReg<='1';
-					
-					RegWrite<='1';
-			when S_MEMWRITE		=>
-					IorD<='1';
-					
-					MemWrite<='1';
-			when S_EXECUTE		=>
-					AluSrcA<='1';
-					ALUSrcB<="00";
-					ALUOp<="10";
-			when S_ALUWRITEBACK	=>
-					RegDst<='1';
-					MemtoReg<='0';
-					
-					RegWrite<='1';
-			when S_BRANCH		=>
-					AluSrcA<='1';
-					ALUSrcB<="00";
-					ALUOp<="01";
-					PCSrc<="01";
-					
-					Branch<='1';
-			when S_ADDIEXEC		=>
-					AluSrcA<='1';
-					ALUSrcB<="10";
-					ALUOp<="00";
-					
-			when S_ADDIWRITEBACK=>
-					RegDst<='0';
-					MemtoReg<='0';
-					
-					RegWrite<='1';
-			when S_JUMP			=>
-					PCSrc<="10";
-					
-					PCWrite<='1';
-			when others 		=>
-				null;
-		end case;
 	end process;
 end;

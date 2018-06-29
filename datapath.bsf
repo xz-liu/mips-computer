@@ -124,8 +124,8 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 232 32)
 		(output)
-		(text "Adr[5..0]" (rect 0 0 36 12)(font "Arial" ))
-		(text "Adr[5..0]" (rect 175 27 211 39)(font "Arial" ))
+		(text "Adr[31..0]" (rect 0 0 40 12)(font "Arial" ))
+		(text "Adr[31..0]" (rect 171 27 211 39)(font "Arial" ))
 		(line (pt 232 32)(pt 216 32)(line_width 3))
 	)
 	(port
