@@ -2,3 +2,4 @@
 /output_files/*
 /incremental_db/*
 /simulation/*
+*.bsf
