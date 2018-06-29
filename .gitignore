@@ -1,0 +1,4 @@
+/db/*
+/output_files/*
+test.bdf
+test.vhd
