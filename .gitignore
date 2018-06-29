@@ -1,4 +1,4 @@
 /db/*
 /output_files/*
-test.bdf
-test.vhd
+/incremental_db/*
+/simulation/*

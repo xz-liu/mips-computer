@@ -165,22 +165,6 @@ refer to the applicable agreement for further details.
 )
 (pin
 	(input)
-	(rect -24 152 184 168)
-	(text "INPUT" (rect 165 0 201 13)(font "Arial" (font_size 6)))
-	(text "InstrOrData[31..0]" (rect 5 0 118 19)(font "Intel Clear" ))
-	(pt 208 8)
-	(drawing
-		(line (pt 124 12)(pt 149 12))
-		(line (pt 124 4)(pt 149 4))
-		(line (pt 153 8)(pt 208 8))
-		(line (pt 124 12)(pt 124 4))
-		(line (pt 149 4)(pt 153 8))
-		(line (pt 149 12)(pt 153 8))
-	)
-	(text "VCC" (rect 168 7 192 20)(font "Arial" (font_size 6)))
-)
-(pin
-	(input)
 	(rect 16 -136 184 -120)
 	(text "INPUT" (rect 125 0 161 13)(font "Arial" (font_size 6)))
 	(text "IRWrite" (rect 5 0 52 15)(font "Arial" ))
@@ -242,6 +226,22 @@ refer to the applicable agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 160 20)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect -16 152 184 168)
+	(text "INPUT" (rect 157 0 193 13)(font "Arial" (font_size 6)))
+	(text "ALUControl[2..0]" (rect 5 0 111 15)(font "Arial" ))
+	(pt 200 8)
+	(drawing
+		(line (pt 116 12)(pt 141 12))
+		(line (pt 116 4)(pt 141 4))
+		(line (pt 145 8)(pt 200 8))
+		(line (pt 116 12)(pt 116 4))
+		(line (pt 141 4)(pt 145 8))
+		(line (pt 141 12)(pt 145 8))
+	)
+	(text "VCC" (rect 160 7 184 20)(font "Arial" (font_size 6)))
 )
 (pin
 	(output)
@@ -609,7 +609,7 @@ refer to the applicable agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 184 96))
 	)
-	(annotation_block (parameter)(rect 448 64 648 104))
+	(annotation_block (parameter)(rect 456 488 656 528))
 )
 (symbol
 	(rect 816 272 976 352)
@@ -673,7 +673,7 @@ refer to the applicable agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 184 96))
 	)
-	(annotation_block (parameter)(rect 448 16 646 56))
+	(annotation_block (parameter)(rect 512 216 710 256))
 )
 (symbol
 	(rect 944 144 1136 256)
@@ -1111,6 +1111,32 @@ refer to the applicable agreement for further details.
 		(rectangle (rect 16 16 128 96))
 	)
 )
+(symbol
+	(rect 888 656 1040 736)
+	(text "intvec" (rect 5 0 41 15)(font "Arial" ))
+	(text "inst9" (rect 8 64 39 83)(font "Intel Clear" ))
+	(port
+		(pt 152 32)
+		(output)
+		(text "y[width-1..0]" (rect 0 0 75 15)(font "Arial" ))
+		(text "y[width-1..0]" (rect 68 27 143 42)(font "Arial" ))
+		(line (pt 152 32)(pt 136 32)(line_width 3))
+	)
+	(parameter
+		"width"
+		"32"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"int"
+		"0"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 136 64))
+	)
+	(annotation_block (parameter)(rect 688 656 888 720))
+)
 (connector
 	(pt 360 88)
 	(pt 360 -168)
@@ -1180,26 +1206,6 @@ refer to the applicable agreement for further details.
 	(pt 224 112)
 )
 (connector
-	(pt 248 424)
-	(pt 184 424)
-	(bus)
-)
-(connector
-	(pt 248 304)
-	(pt 184 304)
-	(bus)
-)
-(connector
-	(pt 184 160)
-	(pt 184 304)
-	(bus)
-)
-(connector
-	(pt 184 304)
-	(pt 184 424)
-	(bus)
-)
-(connector
 	(text "Instr[20..16]" (rect 466 272 543 291)(font "Intel Clear" ))
 	(pt 520 288)
 	(pt 456 288)
@@ -1230,11 +1236,6 @@ refer to the applicable agreement for further details.
 (connector
 	(pt 736 160)
 	(pt 720 160)
-)
-(connector
-	(text "RegWrite" (rect 461 304 517 323)(font "Intel Clear" ))
-	(pt 456 320)
-	(pt 520 320)
 )
 (connector
 	(text "clk" (rect 708 120 725 139)(font "Intel Clear" ))
@@ -1731,12 +1732,57 @@ refer to the applicable agreement for further details.
 	(pt 896 -168)
 	(bus)
 )
+(connector
+	(pt 1120 496)
+	(pt 1056 496)
+	(bus)
+)
+(connector
+	(pt 1040 688)
+	(pt 1056 688)
+	(bus)
+)
+(connector
+	(pt 1056 496)
+	(pt 1056 688)
+	(bus)
+)
+(connector
+	(text "RegDst" (rect 461 304 505 323)(font "Intel Clear" ))
+	(pt 456 320)
+	(pt 520 320)
+)
+(connector
+	(pt 248 304)
+	(pt 192 304)
+	(bus)
+)
+(connector
+	(pt 192 136)
+	(pt 184 136)
+	(bus)
+)
+(connector
+	(pt 248 424)
+	(pt 192 424)
+	(bus)
+)
+(connector
+	(pt 192 136)
+	(pt 192 304)
+	(bus)
+)
+(connector
+	(pt 192 304)
+	(pt 192 424)
+	(bus)
+)
 (junction (pt 232 256))
 (junction (pt 232 88))
 (junction (pt 224 112))
 (junction (pt 224 272))
-(junction (pt 184 304))
 (junction (pt 928 56))
 (junction (pt 936 72))
 (junction (pt 1008 304))
 (junction (pt 808 504))
+(junction (pt 192 304))
