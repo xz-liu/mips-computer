@@ -231,7 +231,7 @@ refer to the applicable agreement for further details.
 	(input)
 	(rect -16 152 184 168)
 	(text "INPUT" (rect 157 0 193 13)(font "Arial" (font_size 6)))
-	(text "ALUControl[2..0]" (rect 5 0 111 15)(font "Arial" ))
+	(text "ALUControl[2..0]" (rect 5 0 110 15)(font "Arial" ))
 	(pt 200 8)
 	(drawing
 		(line (pt 116 12)(pt 141 12))
@@ -312,6 +312,38 @@ refer to the applicable agreement for further details.
 	(rect 1248 -176 1424 -160)
 	(text "OUTPUT" (rect 1 0 51 13)(font "Arial" (font_size 6)))
 	(text "Adr[31..0]" (rect 90 0 153 19)(font "Intel Clear" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 1248 -224 1432 -208)
+	(text "OUTPUT" (rect 1 0 51 13)(font "Arial" (font_size 6)))
+	(text "ALUOut[31..0]" (rect 90 0 178 15)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 1248 -248 1441 -232)
+	(text "OUTPUT" (rect 1 0 51 13)(font "Arial" (font_size 6)))
+	(text "WriteReg[31..0]" (rect 90 0 187 19)(font "Intel Clear" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
@@ -1206,13 +1238,13 @@ refer to the applicable agreement for further details.
 	(pt 224 112)
 )
 (connector
-	(text "Instr[20..16]" (rect 466 272 543 291)(font "Intel Clear" ))
+	(text "Instr[20..16]" (rect 450 264 527 283)(font "Intel Clear" ))
 	(pt 520 288)
 	(pt 456 288)
 	(bus)
 )
 (connector
-	(text "Instr[15..11]" (rect 469 288 546 307)(font "Intel Clear" ))
+	(text "Instr[15..11]" (rect 453 288 530 307)(font "Intel Clear" ))
 	(pt 456 304)
 	(pt 520 304)
 	(bus)
@@ -1249,7 +1281,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "Instr[20..16]" (rect 649 168 726 187)(font "Intel Clear" ))
+	(text "Instr[20..16]" (rect 641 176 718 195)(font "Intel Clear" ))
 	(pt 632 192)
 	(pt 736 192)
 	(bus)
@@ -1278,11 +1310,6 @@ refer to the applicable agreement for further details.
 (connector
 	(pt 736 224)
 	(pt 728 224)
-	(bus)
-)
-(connector
-	(pt 728 224)
-	(pt 728 408)
 	(bus)
 )
 (connector
@@ -1679,7 +1706,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "ALUOut[31..0]" (rect 464 352 554 371)(font "Intel Clear" ))
+	(text "ALUOut[31..0]" (rect 448 352 538 371)(font "Intel Clear" ))
 	(pt 512 376)
 	(pt 456 376)
 	(bus)
@@ -1691,7 +1718,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "pc[31..0]" (rect 1336 16 1392 35)(font "Intel Clear" ))
+	(text "pc[31..0]" (rect 1304 16 1360 35)(font "Intel Clear" ))
 	(pt 1320 40)
 	(pt 1360 40)
 	(bus)
@@ -1769,6 +1796,12 @@ refer to the applicable agreement for further details.
 	(text "PCAdr[31..0]" (rect 1158 -192 1239 -173)(font "Intel Clear" ))
 	(pt 928 -168)
 	(pt 1248 -168)
+	(bus)
+)
+(connector
+	(text "WriteReg[31..0]" (rect 720 309 739 406)(font "Intel Clear" )(vertical))
+	(pt 728 224)
+	(pt 728 408)
 	(bus)
 )
 (junction (pt 232 256))

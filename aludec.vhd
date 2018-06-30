@@ -17,7 +17,7 @@ begin
                 when "100100" => alucontrol <= "000"; -- and
                 when "100101" => alucontrol <= "001"; -- or
                 when "101010" => alucontrol <= "111"; -- slt
-				when "100110" => alucontrol <= "011";
+				when "100110" => alucontrol <= "011"; -- xor
                 when others => alucontrol <= "---"; -- ???
             end case;
         end case;

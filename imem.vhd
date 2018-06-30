@@ -26,23 +26,31 @@ begin
 					mem(3):="00100110"; --xor $s0,$s0,$s0
 					mem(4):="10001100";
 					mem(5):="00000001";
-					mem(6):="00000000";
-					mem(7):="00010000";--lw $s1,10h($s0)
+					mem(6):=x"00";
+					mem(7):=x"20";--lw $s1,20h($s0)
 					mem(8):="00100000";
-					mem(9):="01000001";
-					mem(10):="00000000";
-					mem(11):="00010000";--addi $s2,$s1,10h
+					mem(9):="00100001";
+					mem(10):=x"00";
+					mem(11):=x"10";--addi $s1,$s1,10h
+					mem(12):="10101100";
+					mem(13):="00100001";
+					mem(14):="00000000";
+					mem(15):="00000000";--sw $s1,0h($s1)
+					mem(32):="00000000";
+					mem(33):="11111111";
+					mem(34):="11111111";
+					mem(35):="11111111";--test data
 					--mem(3):="";--sw $s2,offset($s0)
 				end if;
 				
 				adr:=to_integer(unsigned(a));
 				if(we='1') then
-					mem(adr)	:=wd(31 downto 24);
+					mem(adr+0)	:=wd(31 downto 24);
 					mem(adr+1)	:=wd(23 downto 16);
 					mem(adr+2)	:=wd(15 downto 8);
 					mem(adr+3)	:=wd(7 downto 0);
 				else
-					rd <=mem(adr+3)&mem(adr+2)&mem(adr+1) &mem(adr);
+					rd <=mem(adr)&mem(adr+1)&mem(adr+2) &mem(adr+3);
 				end if;
 			end if;
     end process;

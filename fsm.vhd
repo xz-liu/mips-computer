@@ -36,9 +36,22 @@ architecture behave of fsm is
 begin
 	process(all) is
 	variable stateNow 	:integer:=0;
+	variable stateNext 	:integer:=0;
 	begin
 		if(reset='1') then
 			stateNow:=S_FECTH;
+			stateNext:=S_FECTH;
+			IorD<='0';
+			AluSrcA<='0';
+			ALUSrcB<="01";
+			ALUOp<="00";
+			PCSrc<="00";
+			
+			IRWrite<='1';
+			PCWrite<='1';
+			MemWrite<='0';
+			RegWrite<='0';
+			Branch<='0';
 		elsif rising_edge(clk) then
 		
 			case stateNow is
@@ -54,6 +67,8 @@ begin
 						MemWrite<='0';
 						RegWrite<='0';
 						Branch<='0';
+						
+						stateNext:=S_DECODE;
 				when S_DECODE		=>
 						AluSrcA<='0';
 						ALUSrcB<="11";
@@ -64,30 +79,58 @@ begin
 						MemWrite<='0';
 						RegWrite<='0';
 						Branch<='0';
+						
+						case Opcode is
+							when OP_LW|OP_SW 	=>
+								stateNext:=S_MEMADR;
+							when OP_BEQ 		=>
+								stateNext:=S_BRANCH;
+							when OP_ADDI		=>
+								stateNext:=S_ADDIEXEC;
+							when OP_J			=>
+								stateNext:=S_JUMP;
+							when others			=>
+								stateNext:=S_EXECUTE;
+						end case;
 				when S_MEMADR		=>
 						AluSrcA<='1';
 						ALUSrcB<="10";
 						ALUOp<="00";
+														
+						if(Opcode=OP_LW)then
+							stateNext:=S_MEMREAD;
+						elsif(Opcode=OP_SW)then
+							stateNext:=S_MEMWRITE;
+						end if;
 				when S_MEMREAD		=>
 						IorD<='1';
+						
+						stateNext:=S_MEMWRITEBACK;
 				when S_MEMWRITEBACK	=>
 						RegDst<='0';
 						MemtoReg<='1';
 						
 						RegWrite<='1';
+						stateNext:=S_FECTH;
 				when S_MEMWRITE		=>
 						IorD<='1';
 						
 						MemWrite<='1';
+						
+						stateNext:=S_FECTH;
 				when S_EXECUTE		=>
 						AluSrcA<='1';
 						ALUSrcB<="00";
 						ALUOp<="10";
+						
+						stateNext:=S_ALUWRITEBACK;
 				when S_ALUWRITEBACK	=>
 						RegDst<='1';
 						MemtoReg<='0';
 						
 						RegWrite<='1';
+						
+						stateNext:=S_FECTH;
 				when S_BRANCH		=>
 						AluSrcA<='1';
 						ALUSrcB<="00";
@@ -95,67 +138,53 @@ begin
 						PCSrc<="01";
 						
 						Branch<='1';
+						
+						stateNext:=S_FECTH;
 				when S_ADDIEXEC		=>
 						AluSrcA<='1';
 						ALUSrcB<="10";
 						ALUOp<="00";
 						
+						stateNext:=S_ADDIWRITEBACK;
 				when S_ADDIWRITEBACK=>
 						RegDst<='0';
 						MemtoReg<='0';
 						
 						RegWrite<='1';
+						
+						stateNext:=S_FECTH;
 				when S_JUMP			=>
 						PCSrc<="10";
 						
 						PCWrite<='1';
+						
+						stateNext:=S_FECTH;
 				when others 		=>
 					null;
 			end case;
 			
-			case stateNow is
-				when S_FECTH		=>
-					stateNow:=S_DECODE;
-				when S_DECODE		=>
-					case Opcode is
-						when OP_LW|OP_SW 	=>
-							stateNow:=S_MEMADR;
-						when OP_BEQ 		=>
-							stateNow:=S_BRANCH;
-						when OP_ADDI		=>
-							stateNow:=S_ADDIEXEC;
-						when OP_J			=>
-							stateNow:=S_JUMP;
-						when others			=>
-							stateNow:=S_EXECUTE;
-					end case;
-				when S_MEMADR		=>
-					if(Opcode=OP_LW)then
-						stateNow:=S_MEMREAD;
-					elsif(Opcode=OP_SW)then
-						stateNow:=S_MEMWRITE;
-					end if;
-				when S_MEMREAD		=>
-					stateNow:=S_MEMWRITEBACK;
-				when S_MEMWRITEBACK	=>
-					stateNow:=S_FECTH;
-				when S_MEMWRITE		=>
-					stateNow:=S_FECTH;
-				when S_EXECUTE		=>
-					stateNow:=S_ALUWRITEBACK;
-				when S_ALUWRITEBACK	=>
-					stateNow:=S_FECTH;
-				when S_BRANCH		=>
-					stateNow:=S_FECTH;
-				when S_ADDIEXEC		=>
-					stateNow:=S_ADDIWRITEBACK;
-				when S_ADDIWRITEBACK=>
-					stateNow:=S_FECTH;
-				when S_JUMP			=>
-					stateNow:=S_FECTH;
-				when others 		=>
-					null;
-			end case;
+			-- case stateNow is
+			-- 	when S_FECTH		=>
+			-- 	when S_DECODE		=>
+			-- 	when S_MEMADR		=>
+			-- 	when S_MEMREAD		=>
+			-- 	when S_MEMWRITEBACK	=>
+			-- 	when S_MEMWRITE		=>
+			-- 		stateNext:=S_FECTH;
+			-- 	when S_EXECUTE		=>
+			-- 	when S_ALUWRITEBACK	=>
+			-- 		stateNext:=S_FECTH;
+			-- 	when S_BRANCH		=>
+			-- 		stateNext:=S_FECTH;
+			-- 	when S_ADDIEXEC		=>
+			-- 	when S_ADDIWRITEBACK=>
+			-- 		stateNext:=S_FECTH;
+			-- 	when S_JUMP			=>
+			-- 		stateNext:=S_FECTH;
+			-- 	when others 		=>
+			-- 		null;
+			-- end case;
+			stateNow:=stateNext;
 		end if;
 --		MemtoReg,RegDst	:out std_logic;
 --		IorD,PCSrc		:out std_logic;

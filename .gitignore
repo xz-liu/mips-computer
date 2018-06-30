@@ -3,3 +3,4 @@
 /incremental_db/*
 /simulation/*
 *.bsf
+*.txt
