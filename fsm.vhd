@@ -9,22 +9,27 @@ entity fsm is -- finite state machine
 		AluSrcA,IRWrite	:out std_logic;
 		MemWrite,PCWrite:out std_logic;
 		Branch,RegWrite	:out std_logic;
-		ALUOp			:out std_logic_vector(1 downto 0)
+		ALUOp			:out std_logic_vector(1 downto 0);
+		StateNow 		:out std_logic_vector(3 downto 0)
 	);
 end;
 architecture behave of fsm is
-	constant S_FECTH		:integer:=0;
-	constant S_DECODE		:integer:=1;
-	constant S_MEMADR		:integer:=2;
-	constant S_MEMREAD		:integer:=3;
-	constant S_MEMWRITEBACK	:integer:=4;
-	constant S_MEMWRITE		:integer:=5;
-	constant S_EXECUTE		:integer:=6;
-	constant S_ALUWRITEBACK	:integer:=7;
-	constant S_BRANCH		:integer:=8;
-	constant S_ADDIEXEC		:integer:=9;
-	constant S_ADDIWRITEBACK:integer:=10;
-	constant S_JUMP			:integer:=11;
+	
+	type StateType is(
+					 S_FECTH,
+					 S_DECODE,
+					 S_MEMADR,
+					 S_MEMREAD,
+					 S_MEMWRITEBACK,
+					 S_MEMWRITE,
+					 S_EXECUTE,
+					 S_ALUWRITEBACK,
+					 S_BRANCH,
+					 S_ADDIEXEC,
+					 S_ADDIWRITEBACK,
+					 S_JUMP
+					);
+	
 	
 	constant OP_RTYPE	:std_logic_vector(5 downto 0):="000000";
 	constant OP_LW		:std_logic_vector(5 downto 0):="100011";
@@ -33,159 +38,16 @@ architecture behave of fsm is
 	constant OP_ADDI	:std_logic_vector(5 downto 0):="001000";
 	constant OP_J		:std_logic_vector(5 downto 0):="000010";
 	
+	signal state,nextState:StateType;
 begin
 	process(all) is
-	variable stateNow 	:integer:=0;
-	variable stateNext 	:integer:=0;
 	begin
 		if(reset='1') then
-			stateNow:=S_FECTH;
-			stateNext:=S_FECTH;
-			IorD<='0';
-			AluSrcA<='0';
-			ALUSrcB<="01";
-			ALUOp<="00";
-			PCSrc<="00";
-			
-			IRWrite<='1';
-			PCWrite<='1';
-			MemWrite<='0';
-			RegWrite<='0';
-			Branch<='0';
+			state<= S_FECTH;
 		elsif rising_edge(clk) then
-		
-			case stateNow is
-				when S_FECTH		=>
-						IorD<='0';
-						AluSrcA<='0';
-						ALUSrcB<="01";
-						ALUOp<="00";
-						PCSrc<="00";
-						
-						IRWrite<='1';
-						PCWrite<='1';
-						MemWrite<='0';
-						RegWrite<='0';
-						Branch<='0';
-						
-						stateNext:=S_DECODE;
-				when S_DECODE		=>
-						AluSrcA<='0';
-						ALUSrcB<="11";
-						ALUOp<="00";
-						
-						IRWrite<='0';
-						PCWrite<='0';
-						MemWrite<='0';
-						RegWrite<='0';
-						Branch<='0';
-						
-						case Opcode is
-							when OP_LW|OP_SW 	=>
-								stateNext:=S_MEMADR;
-							when OP_BEQ 		=>
-								stateNext:=S_BRANCH;
-							when OP_ADDI		=>
-								stateNext:=S_ADDIEXEC;
-							when OP_J			=>
-								stateNext:=S_JUMP;
-							when others			=>
-								stateNext:=S_EXECUTE;
-						end case;
-				when S_MEMADR		=>
-						AluSrcA<='1';
-						ALUSrcB<="10";
-						ALUOp<="00";
-														
-						if(Opcode=OP_LW)then
-							stateNext:=S_MEMREAD;
-						elsif(Opcode=OP_SW)then
-							stateNext:=S_MEMWRITE;
-						end if;
-				when S_MEMREAD		=>
-						IorD<='1';
-						
-						stateNext:=S_MEMWRITEBACK;
-				when S_MEMWRITEBACK	=>
-						RegDst<='0';
-						MemtoReg<='1';
-						
-						RegWrite<='1';
-						stateNext:=S_FECTH;
-				when S_MEMWRITE		=>
-						IorD<='1';
-						
-						MemWrite<='1';
-						
-						stateNext:=S_FECTH;
-				when S_EXECUTE		=>
-						AluSrcA<='1';
-						ALUSrcB<="00";
-						ALUOp<="10";
-						
-						stateNext:=S_ALUWRITEBACK;
-				when S_ALUWRITEBACK	=>
-						RegDst<='1';
-						MemtoReg<='0';
-						
-						RegWrite<='1';
-						
-						stateNext:=S_FECTH;
-				when S_BRANCH		=>
-						AluSrcA<='1';
-						ALUSrcB<="00";
-						ALUOp<="01";
-						PCSrc<="01";
-						
-						Branch<='1';
-						
-						stateNext:=S_FECTH;
-				when S_ADDIEXEC		=>
-						AluSrcA<='1';
-						ALUSrcB<="10";
-						ALUOp<="00";
-						
-						stateNext:=S_ADDIWRITEBACK;
-				when S_ADDIWRITEBACK=>
-						RegDst<='0';
-						MemtoReg<='0';
-						
-						RegWrite<='1';
-						
-						stateNext:=S_FECTH;
-				when S_JUMP			=>
-						PCSrc<="10";
-						
-						PCWrite<='1';
-						
-						stateNext:=S_FECTH;
-				when others 		=>
-					null;
-			end case;
-			
-			-- case stateNow is
-			-- 	when S_FECTH		=>
-			-- 	when S_DECODE		=>
-			-- 	when S_MEMADR		=>
-			-- 	when S_MEMREAD		=>
-			-- 	when S_MEMWRITEBACK	=>
-			-- 	when S_MEMWRITE		=>
-			-- 		stateNext:=S_FECTH;
-			-- 	when S_EXECUTE		=>
-			-- 	when S_ALUWRITEBACK	=>
-			-- 		stateNext:=S_FECTH;
-			-- 	when S_BRANCH		=>
-			-- 		stateNext:=S_FECTH;
-			-- 	when S_ADDIEXEC		=>
-			-- 	when S_ADDIWRITEBACK=>
-			-- 		stateNext:=S_FECTH;
-			-- 	when S_JUMP			=>
-			-- 		stateNext:=S_FECTH;
-			-- 	when others 		=>
-			-- 		null;
-			-- end case;
-			stateNow:=stateNext;
+			state<=nextState;
 		end if;
+
 --		MemtoReg,RegDst	:out std_logic;
 --		IorD,PCSrc		:out std_logic;
 --		ALUSrcB			:out std_logic_vector(1 downto 0);
@@ -194,4 +56,89 @@ begin
 --		Branch,RegWrite	:out std_logic;
 --		ALUOp			:out std_logic_vector(1 downto 0)
 	end process;
+
+		nextState <= S_DECODE when(state=S_FECTH) else
+				S_MEMADR when((state=S_DECODE)and((Opcode=OP_LW)or(Opcode=OP_SW))) else
+				S_BRANCH when((state=S_DECODE) and(Opcode=OP_BEQ)) else
+				S_ADDIEXEC when((state=S_DECODE) and(Opcode=OP_ADDI)) else
+				S_JUMP  when((state=S_DECODE) and(Opcode=OP_J)) else
+				S_MEMREAD  when((state=S_MEMADR) and(Opcode=OP_LW))else
+				S_MEMWRITE when((state=S_MEMADR) and(Opcode=OP_SW)) else
+				S_MEMWRITEBACK  when(state=S_MEMREAD) else
+				S_ALUWRITEBACK when(state=S_EXECUTE) else
+				S_ADDIWRITEBACK when(state=S_ADDIEXEC) else
+				S_FECTH when((state=S_MEMWRITEBACK)	
+							or(state=S_MEMWRITE)
+							or(state=S_ALUWRITEBACK)
+							or(state=S_BRANCH)	
+							or(state=S_ADDIWRITEBACK)
+							or(state=S_JUMP))else
+				S_EXECUTE;
+		with state select
+			IorD 	<= 	'1' when S_MEMREAD|S_MEMWRITE,
+						'0' when others;
+		with state select
+			AluSrcA <= 	'1' when S_EXECUTE|S_BRANCH|S_ADDIEXEC|S_MEMADR,
+						'0' when others;
+		with state select
+			RegDst	<= 	'1' when S_ALUWRITEBACK,
+						'0' when others;
+		with state select
+			MemtoReg<= 	'1' when S_MEMWRITEBACK,
+						'0' when others;
+		with state select
+			ALUSrcB	<= 	"01" when S_FECTH,
+						"10" when S_ADDIEXEC|S_MEMADR,
+						"11" when S_DECODE,
+						"00" when others;
+		with state select
+			ALUOp	<= 	"01" when S_BRANCH,
+						"10" when S_EXECUTE,
+						"00" when others;
+		with state select
+			PCSrc	<= 	"01" when S_BRANCH,
+						"10" when S_JUMP,
+						"00" when others;						
+		with state select
+			IRWrite	<= 	'1' when S_FECTH,
+						'0' when others;
+		with state select
+			PCWrite	<= 	'1' when S_FECTH|S_JUMP,
+						'0' when others;
+		with state select
+			Branch	<= 	'1' when S_BRANCH,
+						'0' when others;
+		with state select
+			MemWrite<= 	'1' when S_MEMWRITE,
+						'0' when others;
+		with state select
+			RegWrite<= 	'1' when S_MEMWRITEBACK|S_ALUWRITEBACK|S_ADDIWRITEBACK,
+						'0' when others;
+
+				
+	-- constant  S_FECTH		:integer<=0;
+	-- constant  S_DECODE		:integer<=1;
+	-- constant  S_MEMADR		:integer<=2;
+	-- constant  S_MEMREAD		:integer<=3;
+	-- constant  S_MEMWRITEBACK	:integer<=4;
+	-- constant  S_MEMWRITE		:integer<=5;
+	-- constant  S_EXECUTE		:integer<=6;
+	-- constant  S_ALUWRITEBACK	:integer<=7;
+	-- constant  S_BRANCH		:integer<=8;
+	-- constant  S_ADDIEXEC		:integer<=9;
+	-- constant  S_ADDIWRITEBACK:integer<=10;
+	-- constant  S_JUMP			:integer<=11;
+		with state select StateNow<=
+				x"0" when S_FECTH,
+				x"1" when S_DECODE,
+				x"2" when S_MEMADR,
+				x"3" when S_MEMREAD,
+				x"4" when S_MEMWRITEBACK,
+				x"5" when S_MEMWRITE,
+				x"6" when S_EXECUTE,
+				x"7" when S_ALUWRITEBACK,
+				x"8" when S_BRANCH,
+				x"9" when S_ADDIEXEC,
+				x"A" when S_ADDIWRITEBACK,
+				x"B" when S_JUMP;
 end;

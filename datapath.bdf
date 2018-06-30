@@ -355,6 +355,86 @@ refer to the applicable agreement for further details.
 		(line (pt 78 12)(pt 82 8))
 	)
 )
+(pin
+	(output)
+	(rect 1248 -272 1424 -256)
+	(text "OUTPUT" (rect 1 0 51 13)(font "Arial" (font_size 6)))
+	(text "Instr[31..0]" (rect 90 0 157 15)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 1248 -320 1427 -304)
+	(text "OUTPUT" (rect 1 0 51 13)(font "Arial" (font_size 6)))
+	(text "RFRD2[31..0]" (rect 90 0 173 19)(font "Intel Clear" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 1248 -296 1431 -280)
+	(text "OUTPUT" (rect 1 0 51 13)(font "Arial" (font_size 6)))
+	(text "RFRD1[31..0]" (rect 90 0 177 15)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 1248 -344 1432 -328)
+	(text "OUTPUT" (rect 1 0 51 13)(font "Arial" (font_size 6)))
+	(text "RDCLK[31..0]" (rect 90 0 178 15)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 1248 -368 1439 -352)
+	(text "OUTPUT" (rect 1 0 51 13)(font "Arial" (font_size 6)))
+	(text "PCJump[31..0]" (rect 90 0 185 15)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
 (symbol
 	(rect 400 -200 592 -88)
 	(text "flopenr" (rect 5 0 49 15)(font "Arial" ))
@@ -494,48 +574,6 @@ refer to the applicable agreement for further details.
 		(rectangle (rect 16 16 176 96))
 	)
 	(annotation_block (parameter)(rect 240 184 440 224))
-)
-(symbol
-	(rect 248 360 440 472)
-	(text "flopr" (rect 5 0 33 15)(font "Arial" ))
-	(text "inst13" (rect 8 96 48 115)(font "Intel Clear" ))
-	(port
-		(pt 0 32)
-		(input)
-		(text "clk" (rect 0 0 17 15)(font "Arial" ))
-		(text "clk" (rect 21 27 38 42)(font "Arial" ))
-		(line (pt 0 32)(pt 16 32))
-	)
-	(port
-		(pt 0 48)
-		(input)
-		(text "reset" (rect 0 0 33 15)(font "Arial" ))
-		(text "reset" (rect 21 43 54 58)(font "Arial" ))
-		(line (pt 0 48)(pt 16 48))
-	)
-	(port
-		(pt 0 64)
-		(input)
-		(text "d[width-1..0]" (rect 0 0 77 15)(font "Arial" ))
-		(text "d[width-1..0]" (rect 21 59 98 74)(font "Arial" ))
-		(line (pt 0 64)(pt 16 64)(line_width 3))
-	)
-	(port
-		(pt 192 32)
-		(output)
-		(text "q[width-1..0]" (rect 0 0 77 15)(font "Arial" ))
-		(text "q[width-1..0]" (rect 106 27 183 42)(font "Arial" ))
-		(line (pt 192 32)(pt 176 32)(line_width 3))
-	)
-	(parameter
-		"width"
-		"32"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(drawing
-		(rectangle (rect 16 16 176 96))
-	)
-	(annotation_block (parameter)(rect 240 320 440 360))
 )
 (symbol
 	(rect 736 112 912 256)
@@ -1169,6 +1207,48 @@ refer to the applicable agreement for further details.
 	)
 	(annotation_block (parameter)(rect 688 656 888 720))
 )
+(symbol
+	(rect 248 392 440 504)
+	(text "flopr" (rect 5 0 33 15)(font "Arial" ))
+	(text "inst21" (rect 8 96 48 115)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 17 15)(font "Arial" ))
+		(text "clk" (rect 21 27 38 42)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "reset" (rect 0 0 33 15)(font "Arial" ))
+		(text "reset" (rect 21 43 54 58)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "d[width-1..0]" (rect 0 0 77 15)(font "Arial" ))
+		(text "d[width-1..0]" (rect 21 59 98 74)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 192 32)
+		(output)
+		(text "q[width-1..0]" (rect 0 0 77 15)(font "Arial" ))
+		(text "q[width-1..0]" (rect 106 27 183 42)(font "Arial" ))
+		(line (pt 192 32)(pt 176 32)(line_width 3))
+	)
+	(parameter
+		"width"
+		"32"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 176 96))
+	)
+	(annotation_block (parameter)(rect 240 352 440 392))
+)
 (connector
 	(pt 360 88)
 	(pt 360 -168)
@@ -1202,22 +1282,6 @@ refer to the applicable agreement for further details.
 	(pt 248 256)
 )
 (connector
-	(pt 232 88)
-	(pt 232 256)
-)
-(connector
-	(pt 232 256)
-	(pt 232 392)
-)
-(connector
-	(pt 232 392)
-	(pt 248 392)
-)
-(connector
-	(pt 248 408)
-	(pt 224 408)
-)
-(connector
 	(pt 184 112)
 	(pt 224 112)
 )
@@ -1228,14 +1292,6 @@ refer to the applicable agreement for further details.
 (connector
 	(pt 248 272)
 	(pt 224 272)
-)
-(connector
-	(pt 224 408)
-	(pt 224 272)
-)
-(connector
-	(pt 224 272)
-	(pt 224 112)
 )
 (connector
 	(text "Instr[20..16]" (rect 450 264 527 283)(font "Intel Clear" ))
@@ -1293,7 +1349,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "MemtoReg" (rect 453 416 521 435)(font "Intel Clear" ))
+	(text "MemtoReg" (rect 453 424 521 443)(font "Intel Clear" ))
 	(pt 520 440)
 	(pt 472 440)
 )
@@ -1329,21 +1385,6 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 920 88)
-	(pt 944 88)
-	(bus)
-)
-(connector
-	(pt 920 160)
-	(pt 920 208)
-	(bus)
-)
-(connector
-	(pt 920 208)
-	(pt 944 208)
-	(bus)
-)
-(connector
 	(pt 944 192)
 	(pt 936 192)
 )
@@ -1374,11 +1415,6 @@ refer to the applicable agreement for further details.
 (connector
 	(pt 912 144)
 	(pt 920 144)
-	(bus)
-)
-(connector
-	(pt 912 160)
-	(pt 920 160)
 	(bus)
 )
 (connector
@@ -1571,7 +1607,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "PCSrc[1..0]" (rect 1056 488 1126 507)(font "Intel Clear" ))
+	(text "PCSrc[1..0]" (rect 1056 496 1126 515)(font "Intel Clear" ))
 	(pt 1120 512)
 	(pt 1072 512)
 	(bus)
@@ -1607,11 +1643,6 @@ refer to the applicable agreement for further details.
 (connector
 	(pt 1048 592)
 	(pt 1048 480)
-	(bus)
-)
-(connector
-	(pt 1048 480)
-	(pt 1120 480)
 	(bus)
 )
 (connector
@@ -1681,37 +1712,6 @@ refer to the applicable agreement for further details.
 	(pt 488 -56)
 )
 (connector
-	(pt 440 392)
-	(pt 504 392)
-	(bus)
-)
-(connector
-	(pt 504 392)
-	(pt 504 424)
-	(bus)
-)
-(connector
-	(pt 520 424)
-	(pt 504 424)
-	(bus)
-)
-(connector
-	(pt 520 408)
-	(pt 512 408)
-	(bus)
-)
-(connector
-	(pt 512 408)
-	(pt 512 376)
-	(bus)
-)
-(connector
-	(text "ALUOut[31..0]" (rect 448 352 538 371)(font "Intel Clear" ))
-	(pt 512 376)
-	(pt 456 376)
-	(bus)
-)
-(connector
 	(text "pc[31..0]" (rect 1168 -216 1224 -197)(font "Intel Clear" ))
 	(pt 1248 -192)
 	(pt 1160 -192)
@@ -1724,7 +1724,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "ALUOut[31..0]" (rect 1050 448 1140 467)(font "Intel Clear" ))
+	(text "ALUOut[31..0]" (rect 1042 448 1132 467)(font "Intel Clear" ))
 	(pt 1120 464)
 	(pt 1040 464)
 	(bus)
@@ -1766,21 +1766,6 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 248 424)
-	(pt 192 424)
-	(bus)
-)
-(connector
-	(pt 192 136)
-	(pt 192 304)
-	(bus)
-)
-(connector
-	(pt 192 304)
-	(pt 192 424)
-	(bus)
-)
-(connector
 	(text "ALUOut[31..0]" (rect 648 -168 738 -149)(font "Intel Clear" ))
 	(pt 680 -152)
 	(pt 728 -152)
@@ -1804,6 +1789,110 @@ refer to the applicable agreement for further details.
 	(pt 728 408)
 	(bus)
 )
+(connector
+	(pt 912 160)
+	(pt 920 160)
+	(bus)
+)
+(connector
+	(pt 944 208)
+	(pt 920 208)
+	(bus)
+)
+(connector
+	(pt 920 160)
+	(pt 920 208)
+	(bus)
+)
+(connector
+	(pt 920 208)
+	(pt 920 264)
+	(bus)
+)
+(connector
+	(pt 920 88)
+	(pt 944 88)
+	(bus)
+)
+(connector
+	(text "RFRD1[31..0]" (rect 842 88 925 107)(font "Intel Clear" ))
+	(pt 856 88)
+	(pt 920 88)
+	(bus)
+)
+(connector
+	(text "RFRD2[31..0]" (rect 996 264 1079 283)(font "Intel Clear" ))
+	(pt 920 264)
+	(pt 1048 264)
+	(bus)
+)
+(connector
+	(pt 232 88)
+	(pt 232 256)
+)
+(connector
+	(text "PCJump[31..0]" (rect 1044 464 1139 483)(font "Intel Clear" ))
+	(pt 1048 480)
+	(pt 1120 480)
+	(bus)
+)
+(connector
+	(pt 224 112)
+	(pt 224 272)
+)
+(connector
+	(pt 192 136)
+	(pt 192 304)
+	(bus)
+)
+(connector
+	(pt 248 424)
+	(pt 232 424)
+)
+(connector
+	(pt 232 256)
+	(pt 232 424)
+)
+(connector
+	(pt 248 440)
+	(pt 224 440)
+)
+(connector
+	(pt 224 272)
+	(pt 224 440)
+)
+(connector
+	(pt 248 456)
+	(pt 192 456)
+	(bus)
+)
+(connector
+	(pt 192 304)
+	(pt 192 456)
+	(bus)
+)
+(connector
+	(pt 520 408)
+	(pt 456 408)
+	(bus)
+)
+(connector
+	(pt 456 352)
+	(pt 456 408)
+	(bus)
+)
+(connector
+	(text "ALUOut[31..0]" (rect 399 336 489 355)(font "Intel Clear" ))
+	(pt 456 352)
+	(pt 384 352)
+	(bus)
+)
+(connector
+	(text "RDCLK[31..0]" (rect 445 408 529 427)(font "Intel Clear" ))
+	(pt 520 424)
+	(pt 440 424)
+	(bus)
+)
 (junction (pt 232 256))
 (junction (pt 232 88))
 (junction (pt 224 112))
@@ -1813,3 +1902,5 @@ refer to the applicable agreement for further details.
 (junction (pt 1008 304))
 (junction (pt 808 504))
 (junction (pt 192 304))
+(junction (pt 920 208))
+(junction (pt 920 88))

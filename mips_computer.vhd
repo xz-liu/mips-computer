@@ -14,7 +14,7 @@
 
 -- PROGRAM		"Quartus Prime"
 -- VERSION		"Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition"
--- CREATED		"Sat Jun 30 12:15:06 2018"
+-- CREATED		"Sun Jul 01 03:37:52 2018"
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.all; 
@@ -41,16 +41,58 @@ ENTITY mips_computer IS
 		ALUOut :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
 		ALUSrcB :  OUT  STD_LOGIC_VECTOR(1 DOWNTO 0);
 		Funct :  OUT  STD_LOGIC_VECTOR(5 DOWNTO 0);
+		Instr :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
 		Op :  OUT  STD_LOGIC_VECTOR(5 DOWNTO 0);
 		PC :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
+		PCJump :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
 		PCSrc :  OUT  STD_LOGIC_VECTOR(1 DOWNTO 0);
+		RDCLK :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
 		ReadData :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
+		RFRD1 :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
+		RFRD2 :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
+		StateNow :  OUT  STD_LOGIC_VECTOR(3 DOWNTO 0);
 		WriteData :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
 		WriteReg :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0)
 	);
 END mips_computer;
 
 ARCHITECTURE bdf_type OF mips_computer IS 
+
+COMPONENT fsm
+	PORT(clk : IN STD_LOGIC;
+		 reset : IN STD_LOGIC;
+		 Opcode : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+		 MemtoReg : OUT STD_LOGIC;
+		 RegDst : OUT STD_LOGIC;
+		 IorD : OUT STD_LOGIC;
+		 AluSrcA : OUT STD_LOGIC;
+		 IRWrite : OUT STD_LOGIC;
+		 MemWrite : OUT STD_LOGIC;
+		 PCWrite : OUT STD_LOGIC;
+		 Branch : OUT STD_LOGIC;
+		 RegWrite : OUT STD_LOGIC;
+		 ALUOp : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
+		 ALUSrcB : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
+		 PCSrc : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
+		 StateNow : OUT STD_LOGIC_VECTOR(3 DOWNTO 0)
+	);
+END COMPONENT;
+
+COMPONENT aludec
+	PORT(aluop : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+		 funct : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+		 alucontrol : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
+	);
+END COMPONENT;
+
+COMPONENT imem
+	PORT(clk : IN STD_LOGIC;
+		 we : IN STD_LOGIC;
+		 a : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+		 wd : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+		 rd : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+	);
+END COMPONENT;
 
 COMPONENT datapath
 	PORT(clk : IN STD_LOGIC;
@@ -70,45 +112,15 @@ COMPONENT datapath
 		 Adr : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 		 ALUOut : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 		 Funct : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
+		 Instr : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 		 Op : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
 		 pc : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		 PCJump : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		 RDCLK : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		 RFRD1 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		 RFRD2 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 		 WriteData : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 		 WriteReg : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
-	);
-END COMPONENT;
-
-COMPONENT aludec
-	PORT(aluop : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
-		 funct : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
-		 alucontrol : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
-	);
-END COMPONENT;
-
-COMPONENT fsm
-	PORT(clk : IN STD_LOGIC;
-		 reset : IN STD_LOGIC;
-		 Opcode : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
-		 MemtoReg : OUT STD_LOGIC;
-		 RegDst : OUT STD_LOGIC;
-		 IorD : OUT STD_LOGIC;
-		 AluSrcA : OUT STD_LOGIC;
-		 IRWrite : OUT STD_LOGIC;
-		 MemWrite : OUT STD_LOGIC;
-		 PCWrite : OUT STD_LOGIC;
-		 Branch : OUT STD_LOGIC;
-		 RegWrite : OUT STD_LOGIC;
-		 ALUOp : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
-		 ALUSrcB : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
-		 PCSrc : OUT STD_LOGIC_VECTOR(1 DOWNTO 0)
-	);
-END COMPONENT;
-
-COMPONENT imem
-	PORT(clk : IN STD_LOGIC;
-		 we : IN STD_LOGIC;
-		 a : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-		 wd : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-		 rd : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 	);
 END COMPONENT;
 
@@ -136,7 +148,40 @@ BEGIN
 
 
 
-b2v_inst2 : datapath
+b2v_inst : fsm
+PORT MAP(clk => clk,
+		 reset => reset,
+		 Opcode => op_ALTERA_SYNTHESIZED,
+		 MemtoReg => memtoreg_ALTERA_SYNTHESIZED,
+		 RegDst => regdst_ALTERA_SYNTHESIZED,
+		 IorD => iord_ALTERA_SYNTHESIZED,
+		 AluSrcA => alusrca_ALTERA_SYNTHESIZED,
+		 IRWrite => irwrite_ALTERA_SYNTHESIZED,
+		 MemWrite => memwrite_ALTERA_SYNTHESIZED,
+		 PCWrite => pcwrite_ALTERA_SYNTHESIZED,
+		 Branch => branch_ALTERA_SYNTHESIZED,
+		 RegWrite => regwrite_ALTERA_SYNTHESIZED,
+		 ALUOp => aluop_ALTERA_SYNTHESIZED,
+		 ALUSrcB => alusrcb_ALTERA_SYNTHESIZED,
+		 PCSrc => pcsrc_ALTERA_SYNTHESIZED,
+		 StateNow => StateNow);
+
+
+b2v_inst3 : aludec
+PORT MAP(aluop => aluop_ALTERA_SYNTHESIZED,
+		 funct => funct_ALTERA_SYNTHESIZED,
+		 alucontrol => alucontrol_ALTERA_SYNTHESIZED);
+
+
+b2v_inst7 : imem
+PORT MAP(clk => clk,
+		 we => memwrite_ALTERA_SYNTHESIZED,
+		 a => adr_ALTERA_SYNTHESIZED,
+		 wd => writedata_ALTERA_SYNTHESIZED,
+		 rd => readdata_ALTERA_SYNTHESIZED);
+
+
+b2v_inst9 : datapath
 PORT MAP(clk => clk,
 		 IorD => iord_ALTERA_SYNTHESIZED,
 		 RegDst => regdst_ALTERA_SYNTHESIZED,
@@ -154,42 +199,15 @@ PORT MAP(clk => clk,
 		 Adr => adr_ALTERA_SYNTHESIZED,
 		 ALUOut => ALUOut,
 		 Funct => funct_ALTERA_SYNTHESIZED,
+		 Instr => Instr,
 		 Op => op_ALTERA_SYNTHESIZED,
 		 pc => PC,
+		 PCJump => PCJump,
+		 RDCLK => RDCLK,
+		 RFRD1 => RFRD1,
+		 RFRD2 => RFRD2,
 		 WriteData => writedata_ALTERA_SYNTHESIZED,
 		 WriteReg => WriteReg);
-
-
-b2v_inst3 : aludec
-PORT MAP(aluop => aluop_ALTERA_SYNTHESIZED,
-		 funct => funct_ALTERA_SYNTHESIZED,
-		 alucontrol => alucontrol_ALTERA_SYNTHESIZED);
-
-
-b2v_inst4 : fsm
-PORT MAP(clk => clk,
-		 reset => reset,
-		 Opcode => op_ALTERA_SYNTHESIZED,
-		 MemtoReg => memtoreg_ALTERA_SYNTHESIZED,
-		 RegDst => regdst_ALTERA_SYNTHESIZED,
-		 IorD => iord_ALTERA_SYNTHESIZED,
-		 AluSrcA => alusrca_ALTERA_SYNTHESIZED,
-		 IRWrite => irwrite_ALTERA_SYNTHESIZED,
-		 MemWrite => memwrite_ALTERA_SYNTHESIZED,
-		 PCWrite => pcwrite_ALTERA_SYNTHESIZED,
-		 Branch => branch_ALTERA_SYNTHESIZED,
-		 RegWrite => regwrite_ALTERA_SYNTHESIZED,
-		 ALUOp => aluop_ALTERA_SYNTHESIZED,
-		 ALUSrcB => alusrcb_ALTERA_SYNTHESIZED,
-		 PCSrc => pcsrc_ALTERA_SYNTHESIZED);
-
-
-b2v_inst7 : imem
-PORT MAP(clk => clk,
-		 we => memwrite_ALTERA_SYNTHESIZED,
-		 a => adr_ALTERA_SYNTHESIZED,
-		 wd => writedata_ALTERA_SYNTHESIZED,
-		 rd => readdata_ALTERA_SYNTHESIZED);
 
 MemtoReg <= memtoreg_ALTERA_SYNTHESIZED;
 RegDst <= regdst_ALTERA_SYNTHESIZED;
