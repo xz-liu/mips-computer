@@ -53,6 +53,32 @@ set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
 set_global_assignment -name VHDL_SHOW_LMF_MAPPING_MESSAGES OFF
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_location_assignment PIN_N16 -to data[6]
+set_location_assignment PIN_R14 -to data[7]
+set_location_assignment PIN_P16 -to data[5]
+set_location_assignment PIN_T15 -to data[4]
+set_location_assignment PIN_P15 -to data[3]
+set_location_assignment PIN_N12 -to data[2]
+set_location_assignment PIN_N15 -to data[1]
+set_location_assignment PIN_R16 -to data[0]
+set_location_assignment PIN_M11 -to sel[0]
+set_location_assignment PIN_P11 -to sel[1]
+set_location_assignment PIN_N11 -to sel[2]
+set_location_assignment PIN_M10 -to sel[3]
+set_location_assignment PIN_P9 -to sel[4]
+set_location_assignment PIN_N9 -to sel[5]
+set_location_assignment PIN_N13 -to reset
+set_location_assignment PIN_M15 -to clk
+set_location_assignment PIN_E1 -to clk_dt
+set_location_assignment PIN_E10 -to state[3]
+set_location_assignment PIN_F9 -to state[2]
+set_location_assignment PIN_C9 -to state[1]
+set_location_assignment PIN_D9 -to state[0]
+set_global_assignment -name VHDL_FILE notgate.vhd
+set_global_assignment -name VHDL_FILE digtube.vhd
 set_global_assignment -name VHDL_FILE mips_fpga.vhd
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform.vwf
 set_global_assignment -name VHDL_FILE mips_computer.vhd
@@ -74,7 +100,5 @@ set_global_assignment -name VHDL_FILE flopenr.vhd
 set_global_assignment -name VHDL_FILE alu.vhd
 set_global_assignment -name VHDL_FILE adder.vhd
 set_global_assignment -name BDF_FILE output_files/mips_fpga.bdf
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name VECTOR_WAVEFORM_FILE FPGAWave.vwf
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -14,7 +14,7 @@
 
 -- PROGRAM		"Quartus Prime"
 -- VERSION		"Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition"
--- CREATED		"Sun Jul 01 03:37:52 2018"
+-- CREATED		"Mon Jul 02 21:10:23 2018"
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.all; 
@@ -78,19 +78,20 @@ COMPONENT fsm
 	);
 END COMPONENT;
 
-COMPONENT aludec
-	PORT(aluop : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
-		 funct : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
-		 alucontrol : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
-	);
-END COMPONENT;
-
 COMPONENT imem
 	PORT(clk : IN STD_LOGIC;
+		 reset : IN STD_LOGIC;
 		 we : IN STD_LOGIC;
 		 a : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 		 wd : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 		 rd : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+	);
+END COMPONENT;
+
+COMPONENT aludec
+	PORT(aluop : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+		 funct : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+		 alucontrol : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
 	);
 END COMPONENT;
 
@@ -167,18 +168,19 @@ PORT MAP(clk => clk,
 		 StateNow => StateNow);
 
 
-b2v_inst3 : aludec
-PORT MAP(aluop => aluop_ALTERA_SYNTHESIZED,
-		 funct => funct_ALTERA_SYNTHESIZED,
-		 alucontrol => alucontrol_ALTERA_SYNTHESIZED);
-
-
-b2v_inst7 : imem
+b2v_inst1 : imem
 PORT MAP(clk => clk,
+		 reset => reset,
 		 we => memwrite_ALTERA_SYNTHESIZED,
 		 a => adr_ALTERA_SYNTHESIZED,
 		 wd => writedata_ALTERA_SYNTHESIZED,
 		 rd => readdata_ALTERA_SYNTHESIZED);
+
+
+b2v_inst3 : aludec
+PORT MAP(aluop => aluop_ALTERA_SYNTHESIZED,
+		 funct => funct_ALTERA_SYNTHESIZED,
+		 alucontrol => alucontrol_ALTERA_SYNTHESIZED);
 
 
 b2v_inst9 : datapath

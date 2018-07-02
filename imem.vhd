@@ -2,7 +2,7 @@ library IEEE;
     use IEEE.STD_LOGIC_1164.all; use STD.TEXTIO.all;
     use IEEE.NUMERIC_STD.all;
 entity imem is -- instruction memory
-    port(clk,we:in std_logic;
+    port(clk,reset,we:in std_logic;
 		a: in STD_LOGIC_VECTOR(31 downto 0);
 		wd: in STD_LOGIC_VECTOR(31 downto 0);
         rd: out STD_LOGIC_VECTOR(31 downto 0));
@@ -15,11 +15,7 @@ begin
     process(clk,a) is
 			variable init: boolean :=true;
 		begin
-				
-				if(rising_edge(clk)) then				
-					if(init)then
-						init:=false;
-						
+				if(reset='1')then						
 						mem(0):="00001000";
 						mem(1):=x"00";
 						mem(2):=x"00";
@@ -60,7 +56,7 @@ begin
 						mem(49):="00000000";
 						mem(50):="00000000";
 						mem(51):="11111111";	--test data (30h)
-					end if;
+				elsif(rising_edge(clk)) then		
 					if(we='1') then
 						mem(to_integer(unsigned(a))+0)	:=wd(31 downto 24);
 						mem(to_integer(unsigned(a))+1)	:=wd(23 downto 16);

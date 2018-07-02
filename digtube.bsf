@@ -20,9 +20,9 @@ refer to the applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 184 160)
-	(text "imem" (rect 5 0 27 12)(font "Arial" ))
-	(text "inst" (rect 8 128 20 140)(font "Arial" ))
+	(rect 16 16 232 128)
+	(text "digtube" (rect 5 0 32 12)(font "Arial" ))
+	(text "inst" (rect 8 96 20 108)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -40,32 +40,38 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 0 64)
 		(input)
-		(text "we" (rect 0 0 10 12)(font "Arial" ))
-		(text "we" (rect 21 59 31 71)(font "Arial" ))
+		(text "en" (rect 0 0 9 12)(font "Arial" ))
+		(text "en" (rect 21 59 30 71)(font "Arial" ))
 		(line (pt 0 64)(pt 16 64)(line_width 1))
 	)
 	(port
 		(pt 0 80)
 		(input)
-		(text "a[31..0]" (rect 0 0 28 12)(font "Arial" ))
-		(text "a[31..0]" (rect 21 75 49 87)(font "Arial" ))
+		(text "data[wid*4-1..0]" (rect 0 0 55 12)(font "Arial" ))
+		(text "data[wid*4-1..0]" (rect 21 75 76 87)(font "Arial" ))
 		(line (pt 0 80)(pt 16 80)(line_width 3))
 	)
 	(port
-		(pt 0 96)
-		(input)
-		(text "wd[31..0]" (rect 0 0 34 12)(font "Arial" ))
-		(text "wd[31..0]" (rect 21 91 55 103)(font "Arial" ))
-		(line (pt 0 96)(pt 16 96)(line_width 3))
+		(pt 216 32)
+		(output)
+		(text "dt_sel[wid-1..0]" (rect 0 0 56 12)(font "Arial" ))
+		(text "dt_sel[wid-1..0]" (rect 139 27 195 39)(font "Arial" ))
+		(line (pt 216 32)(pt 200 32)(line_width 3))
 	)
 	(port
-		(pt 168 32)
+		(pt 216 48)
 		(output)
-		(text "rd[31..0]" (rect 0 0 31 12)(font "Arial" ))
-		(text "rd[31..0]" (rect 116 27 147 39)(font "Arial" ))
-		(line (pt 168 32)(pt 152 32)(line_width 3))
+		(text "dt_data[7..0]" (rect 0 0 49 12)(font "Arial" ))
+		(text "dt_data[7..0]" (rect 146 43 195 55)(font "Arial" ))
+		(line (pt 216 48)(pt 200 48)(line_width 3))
 	)
+	(parameter
+		"wid"
+		"4"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 152 128)(line_width 1))
+		(rectangle (rect 16 16 200 96)(line_width 1))
 	)
+	(annotation_block (parameter)(rect 232 -64 332 16))
 )
