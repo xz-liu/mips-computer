@@ -1,8 +1,9 @@
 library IEEE;
     use IEEE.STD_LOGIC_1164.all; use STD.TEXTIO.all;
-    use IEEE.NUMERIC_STD.all;
+	use IEEE.NUMERIC_STD.all;
+	use IEEE.std_logic_arith.conv_std_logic_vector;
 entity imem is -- instruction memory
-    port(clk,reset,we:in std_logic;
+	port(clk,reset,we:in std_logic;
 		a: in STD_LOGIC_VECTOR(31 downto 0);
 		wd: in STD_LOGIC_VECTOR(31 downto 0);
         rd: out STD_LOGIC_VECTOR(31 downto 0));
@@ -12,53 +13,42 @@ architecture behave of imem is
 				STD_LOGIC_VECTOR(7 downto 0);
 			shared variable mem:ramtype;
 begin
-    process(clk,a) is
+    process(all) is
 			variable init: boolean :=true;
 		begin
-				if(reset='1')then						
-						mem(0):="00001000";
-						mem(1):=x"00";
-						mem(2):=x"00";
-						mem(3):=x"03"; --j 3
-						
-						mem(12):="00000000";
-						mem(13):="00000000";
-						mem(14):="00001000";
-						mem(15):="00100110";	 --xor $1,$0,$0
-						mem(16):="10001100";
-						mem(17):="00000001";
-						mem(18):=x"00";
-						mem(19):=x"2A";			--lw $1,2Ah($0)
-						mem(20):="00100000";
-						mem(21):="00100001";
-						mem(22):=x"00";
-						mem(23):=x"1B";			--addi $1,$1,1Bh
-						mem(24):="10101100";
-						mem(25):="00000001";
-						mem(26):=x"00";
-						mem(27):=x"2A";			--sw $1,2Ah($0)
-						mem(28):="10001100";
-						mem(29):="00000010";
-						mem(30):=x"00";
-						mem(31):=x"30";			--lw $2,30h($0)
-						mem(32):="00000000";
-						mem(33):="00100010";
-						mem(34):="00011000";
-						mem(35):="00100101"; 	--or $3,$1,$2
-						mem(36):="10101100";
-						mem(37):="00000011";
-						mem(38):=x"00";
-						mem(39):=x"30";			--sw $3,30h($0)
-						
-						mem(42):="11111111";
-						mem(43):="11111111";	--test data (2Ah)
-						mem(44):="00000000";
-						mem(45):="00000000";
-						
-						mem(48):="00000000";
-						mem(49):="00000000";
-						mem(50):="00000000";
-						mem(51):="11111111";	--test data (30h)
+				if(reset='1')then
+					mem(0):=		"10001100";
+					mem(1):=		"00000001";
+					mem(2):=		"00000000";
+					mem(3):=		"00011100";
+					mem(4):=		"00100000";
+					mem(5):=		"00100010";
+					mem(6):=		"00000000";
+					mem(7):=		"00000100";
+					mem(8):=		"10001100";
+					mem(9):=		"00100001";
+					mem(10):=		"00000000";
+					mem(11):=		"00000000";
+					mem(12):=		"10001100";
+					mem(13):=		"01000010";
+					mem(14):=		"00000000";
+					mem(15):=		"00000000";
+					mem(16):=		"00000000";
+					mem(17):=		"00100010";
+					mem(18):=		"00011000";
+					mem(19):=		"00100000";
+					mem(20):=		"10101100";
+					mem(21):=		"00000011";
+					mem(22):=		"00000000";
+					mem(23):=		"00100000";
+					mem(24):=		"00001000";
+					mem(25):=		"00000000";
+					mem(26):=		"00000000";
+					mem(27):=		"00000000";
+					mem(28):=		"11111111";
+					mem(29):=		"11111111";
+					mem(30):=		"00000000";
+					mem(31):=		"00000001";
 				elsif(rising_edge(clk)) then		
 					if(we='1') then
 						mem(to_integer(unsigned(a))+0)	:=wd(31 downto 24);
@@ -68,5 +58,12 @@ begin
 					end if;
 				end if;
     end process;
-		rd <=mem(to_integer(unsigned(a)))&mem(to_integer(unsigned(a))+1)&mem(to_integer(unsigned(a))+2) &mem(to_integer(unsigned(a))+3);
+		rd <=mem(to_integer(unsigned(a)))
+		&mem(to_integer(unsigned(a))+1)
+		&mem(to_integer(unsigned(a))+2) 
+		&mem(to_integer(unsigned(a))+3)
+		when ((a and x"ffff0000")=x"00000000")
+		else                       x"01010101";
+		
+										
 end;
