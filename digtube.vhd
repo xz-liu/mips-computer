@@ -46,15 +46,6 @@ begin
 	process (en, reset) is
 	begin
 		if reset = '1' then
-		
---			for i in 3 downto 0 loop
---				dt_arr(0) <= "01100011";
---				dt_arr(1) <= "10000101";
---				dt_arr(2) <= "01100001";
---				dt_arr(3) <= "01110001";
---				
---			end loop;
-
 			for i in wid-1 downto 0 loop
 				dt_arr(i) <= "00000011";
 			end loop;
@@ -72,11 +63,10 @@ begin
 		variable counter : integer range 0 to 2500;
 	begin
 
-		if clk'event and clk = '1' then
+		if rising_edge(clk) then
 			counter := counter + 1;
 			if counter = 2500 then
 				counter := 0;
-				
 				for i in wid-1 downto 0 loop
 					if i = ff then dt_sel(i) <= '0';
 					else dt_sel(i) <= '1';
@@ -86,14 +76,8 @@ begin
 				if ff = wid then ff := -1;
 				else dt_data <= dt_arr(ff);
 				end if;
-				
 				ff := ff + 1;
-				
 			end if;
-			
 		end if;
-		
-
 	end process;
-	
 end;

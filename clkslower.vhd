@@ -12,7 +12,7 @@ end clkslower ;
 architecture arch of clkslower is
     shared variable clk_cnt:integer:=0;
     signal clk_o:std_logic:='0';
-    constant clk_max:integer:=500;--5000000;
+    constant clk_max:integer:=50;--5000000;
 begin
     proc : process( all )
     begin
@@ -26,5 +26,5 @@ begin
             end if;
         end if;
     end process ; -- proc
-    clkOUT<=clk_o;
+    clkOUT<=clkIN;
 end architecture ;

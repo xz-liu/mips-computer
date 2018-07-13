@@ -57,7 +57,7 @@ refer to the applicable agreement for further details.
 	(input)
 	(rect -192 304 -24 320)
 	(text "INPUT" (rect 125 0 161 13)(font "Arial" (font_size 6)))
-	(text "rxd" (rect 5 0 24 15)(font "Arial" ))
+	(text "rxd" (rect 5 0 23 15)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -427,28 +427,6 @@ refer to the applicable agreement for further details.
 		(rectangle (rect 16 16 216 464))
 	)
 )
-(symbol
-	(rect -184 168 -32 248)
-	(text "clkslower" (rect 5 0 66 15)(font "Arial" ))
-	(text "inst9" (rect 8 64 39 83)(font "Intel Clear" ))
-	(port
-		(pt 0 32)
-		(input)
-		(text "clkIN" (rect 0 0 31 15)(font "Arial" ))
-		(text "clkIN" (rect 21 27 52 42)(font "Arial" ))
-		(line (pt 0 32)(pt 16 32))
-	)
-	(port
-		(pt 152 32)
-		(output)
-		(text "clkOUT" (rect 0 0 47 15)(font "Arial" ))
-		(text "clkOUT" (rect 92 27 139 42)(font "Arial" ))
-		(line (pt 152 32)(pt 136 32))
-	)
-	(drawing
-		(rectangle (rect 16 16 136 64))
-	)
-)
 (connector
 	(pt 72 848)
 	(pt 72 912)
@@ -664,20 +642,16 @@ refer to the applicable agreement for further details.
 	(pt 32 280)
 )
 (connector
-	(pt 32 200)
-	(pt -32 200)
-)
-(connector
-	(pt -184 200)
-	(pt -192 200)
-)
-(connector
 	(pt -192 200)
 	(pt -192 472)
 )
 (connector
 	(pt -192 472)
 	(pt -192 816)
+)
+(connector
+	(pt -192 200)
+	(pt 32 200)
 )
 (junction (pt 72 296))
 (junction (pt -192 472))
