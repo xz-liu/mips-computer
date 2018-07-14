@@ -2,7 +2,7 @@ library IEEE;
     use IEEE.STD_LOGIC_1164.all; use STD.TEXTIO.all;
 	use IEEE.NUMERIC_STD.all;
 	use IEEE.std_logic_arith.conv_std_logic_vector;
-entity iomemory is -- instruction memory
+entity iomemory is -- io buffer memory
 	port(clk,wr:in std_logic;
 		a: in STD_LOGIC_VECTOR(31 downto 0);
 		a8:in std_logic_vector(7 downto 0) ;

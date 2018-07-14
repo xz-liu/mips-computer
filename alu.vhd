@@ -11,29 +11,23 @@ entity alu is
 end alu ; 
 
 architecture arch of alu is
-    -- when "100000" => alucontrol <= "010"; -- add
-    -- when "100010" => alucontrol <= "110"; -- sub
-    -- when "100100" => alucontrol <= "000"; -- and
-    -- when "100101" => alucontrol <= "001"; -- or
-    -- when "101010" => alucontrol <= "111"; -- slt
-	function bool_to_slv(X : boolean)
+ 	function bool_to_slv(X : boolean)
             return STD_LOGIC_VECTOR  is
 		begin
 		  if X then
-			return (x"00000001");
+				return (x"00000001");
 		  else
-			return (x"00000000");
+				return (x"00000000");
 		  end if;
 		end bool_to_slv;
 begin
 	with alucontrol select
         result <= a + b when "010",
 				  a - b when "110",
-        		  a and b when "000",
-        		  a or b when "001",
+        	a and b when "000",
+        	a or b when "001",
 				  a xor b when "011",
-                  bool_to_slv(a < b)  when "111" ,
+          bool_to_slv(a < b)  when "111" ,
 				  a when others;
 	zero<= '1' when result =x"00000000"	 else '0';
-
 end architecture ;

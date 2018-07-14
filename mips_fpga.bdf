@@ -34,24 +34,7 @@ refer to the applicable agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 152 20)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect -392 248 -320 288))
-)
-(pin
-	(input)
-	(rect -368 464 -200 480)
-	(text "INPUT" (rect 125 0 161 13)(font "Arial" (font_size 6)))
-	(text "clk_dt" (rect 5 0 42 15)(font "Arial" ))
-	(pt 168 8)
-	(drawing
-		(line (pt 84 12)(pt 109 12))
-		(line (pt 84 4)(pt 109 4))
-		(line (pt 113 8)(pt 168 8))
-		(line (pt 84 12)(pt 84 4))
-		(line (pt 109 4)(pt 113 8))
-		(line (pt 109 12)(pt 113 8))
-	)
-	(text "VCC" (rect 128 7 152 20)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect -432 480 -368 504))
+	(annotation_block (location)(rect -192 216 -120 256))
 )
 (pin
 	(input)
@@ -68,7 +51,25 @@ refer to the applicable agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 152 20)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect -256 320 -192 344))
+	(annotation_block (location)(rect -192 320 -128 344))
+)
+(pin
+	(input)
+	(rect -184 464 -16 480)
+	(text "INPUT" (rect 7 0 43 13)(font "Arial" (font_size 6)))
+	(text "clk_dt" (rect 126 0 163 15)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 84 12)(pt 59 12))
+		(line (pt 84 4)(pt 59 4))
+		(line (pt 55 8)(pt 0 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 59 4)(pt 55 8))
+		(line (pt 59 12)(pt 55 8))
+	)
+	(flipy)
+	(text "VCC" (rect 16 7 40 20)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect -80 432 -16 456))
 )
 (pin
 	(output)
@@ -85,7 +86,7 @@ refer to the applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 680 824 752 1008))
+	(annotation_block (location)(rect 592 824 664 1008))
 )
 (pin
 	(output)
@@ -102,7 +103,7 @@ refer to the applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 608 808 680 952))
+	(annotation_block (location)(rect 520 808 592 952))
 )
 (pin
 	(output)
@@ -119,7 +120,7 @@ refer to the applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 712 656 784 680))
+	(annotation_block (location)(rect 536 656 600 760))
 )
 (symbol
 	(rect -24 280 24 312)
@@ -606,52 +607,33 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 88 264)
-	(pt 64 264)
-)
-(connector
-	(pt 64 264)
-	(pt 64 336)
-)
-(connector
-	(pt -24 336)
-	(pt 64 336)
-)
-(connector
-	(pt 88 280)
-	(pt 32 280)
-)
-(connector
-	(pt -24 336)
-	(pt -24 472)
-)
-(connector
 	(pt -192 816)
 	(pt 88 816)
 )
 (connector
+	(pt -192 280)
+	(pt 88 280)
+)
+(connector
+	(pt 88 264)
+	(pt -192 264)
+)
+(connector
+	(pt -192 264)
+	(pt -192 280)
+)
+(connector
+	(pt -184 472)
 	(pt -192 472)
-	(pt -200 472)
 )
 (connector
-	(pt -192 472)
-	(pt -24 472)
-)
-(connector
-	(pt 32 200)
-	(pt 32 280)
-)
-(connector
-	(pt -192 200)
+	(pt -192 280)
 	(pt -192 472)
 )
 (connector
 	(pt -192 472)
 	(pt -192 816)
 )
-(connector
-	(pt -192 200)
-	(pt 32 200)
-)
 (junction (pt 72 296))
 (junction (pt -192 472))
+(junction (pt -192 280))

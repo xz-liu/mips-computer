@@ -1,5 +1,5 @@
 library IEEE; use IEEE.STD_LOGIC_1164.all;
-entity mux4 is -- two-input multiplexer
+entity mux4 is -- four-input multiplexer
 generic(width: integer := 32);
     port(d0, d1,d2,d3: in STD_LOGIC_VECTOR(width-1 downto 0);
         s: in STD_LOGIC_VECTOR(1 downto 0);

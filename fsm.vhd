@@ -14,7 +14,6 @@ entity fsm is -- finite state machine
 	);
 end;
 architecture behave of fsm is
-	
 	type StateType is(
 					 S_FECTH,
 					 S_DECODE,
@@ -28,8 +27,7 @@ architecture behave of fsm is
 					 S_ADDIEXEC,
 					 S_ADDIWRITEBACK,
 					 S_JUMP
-					);
-	
+					);	
 	
 	constant OP_RTYPE	:std_logic_vector(5 downto 0):="000000";
 	constant OP_LW		:std_logic_vector(5 downto 0):="100011";
@@ -47,16 +45,7 @@ begin
 		elsif rising_edge(clk) then
 			state<=nextState;
 		end if;
-
---		MemtoReg,RegDst	:out std_logic;
---		IorD,PCSrc		:out std_logic;
---		ALUSrcB			:out std_logic_vector(1 downto 0);
---		AluSrcA,IRWrite	:out std_logic;
---		MemWrite,PCWrite:out std_logic;
---		Branch,RegWrite	:out std_logic;
---		ALUOp			:out std_logic_vector(1 downto 0)
 	end process;
-
 		nextState <= S_DECODE when(state=S_FECTH) else
 				S_MEMADR when((state=S_DECODE)and((Opcode=OP_LW)or(Opcode=OP_SW))) else
 				S_BRANCH when((state=S_DECODE) and(Opcode=OP_BEQ)) else
@@ -114,20 +103,6 @@ begin
 		with state select
 			RegWrite<= 	'1' when S_MEMWRITEBACK|S_ALUWRITEBACK|S_ADDIWRITEBACK,
 						'0' when others;
-
-				
-	-- constant  S_FECTH		:integer<=0;
-	-- constant  S_DECODE		:integer<=1;
-	-- constant  S_MEMADR		:integer<=2;
-	-- constant  S_MEMREAD		:integer<=3;
-	-- constant  S_MEMWRITEBACK	:integer<=4;
-	-- constant  S_MEMWRITE		:integer<=5;
-	-- constant  S_EXECUTE		:integer<=6;
-	-- constant  S_ALUWRITEBACK	:integer<=7;
-	-- constant  S_BRANCH		:integer<=8;
-	-- constant  S_ADDIEXEC		:integer<=9;
-	-- constant  S_ADDIWRITEBACK:integer<=10;
-	-- constant  S_JUMP			:integer<=11;
 		with state select StateNow<=
 				x"0" when S_FECTH,
 				x"1" when S_DECODE,
