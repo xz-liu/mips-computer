@@ -1,6 +1,6 @@
 # mips_computer
 
-A `simple` multicycle mips computer 
+A `simple` computer based on the design in "Digital Design and Computer Architecture - 2nd Edition"
 
 ## instructions supported
 
